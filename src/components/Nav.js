@@ -18,6 +18,12 @@ class NavBar extends Component {
         selectedKeys={[this.state.current]}
         mode="horizontal"
       >
+        <Menu.Item key="Home">
+          <Link to="/">
+            <Icon type="home" />
+             View Pokemons
+          </Link>
+        </Menu.Item>
         <Menu.Item key="Search">
           <Link to="/">
             <Icon type="search" />
