@@ -1,3 +1,4 @@
+/*General styles*/
 .heading {
   text-align: center;
   color: lightseagreen;
@@ -9,21 +10,43 @@
 
 .viewContainer {
   margin: 0 auto;
-  max-width: 850px;
+  width: 850px;
   margin-top: 35px;
   margin-bottom: 50px;
+}
+/*Media query for viewContainer*/
+@media only screen and (max-width: 575px) {
+  .viewContainer {
+    max-width: 350px;
+  }
+}
+@media only screen and (min-width: 576px) and (max-width: 800px) {
+  .viewContainer {
+    max-width: 650px;
+  }
 }
 
 .loading-container {
   width: 200px;
   margin: 0 auto;
-  
+  font-size: 30px;
+}
+
+/*in app message styles*/
+.post-status-message {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.page-error {
+  text-align: center;
+  margin-top: 30px;
 }
 
 /*ant header styles*/
 .ant-layout-header {
   height: auto;
-  background-color: #f3f0f0;
+  background-color: #ffffff;
 }
 
 /*ant navbar styles*/
@@ -45,8 +68,11 @@
   width: 100%;
 }
 
-/*404 styles */
-.page-error {
-  text-align: center;
+/*pagination styles*/
+.pagination-top {
+  margin-bottom: 30px;
+}
+
+.pagination-bottom {
   margin-top: 30px;
 }
