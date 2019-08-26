@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { Form, Input, Button, Row, Col } from "antd";
+import PropTypes from "prop-types";
+import { Form, Input, Button, Row, Col, Typography } from "antd";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+
+//importing action creator here
+import { postPokemonData } from "../actions/index";
+
+const { Paragraph } = Typography;
 
 class AddPokemons extends Component {
   state = {
@@ -18,19 +25,20 @@ class AddPokemons extends Component {
     this.setState({ [name]: value });
   };
 
-  postPokemonData = async (e, data = {}) => {
+  handleSubmit = (e, data = {}) => {
     e.preventDefault();
+    this.props.form.validateFields();
+    this.props.postPokemonData(data);
 
-    const url = "http://localhost:5000/api/pokemon";
-
-    try {
-      let res = await axios.post(url, data);
-      await setTimeout(() => {
-        this.props.history.push("/");
-      }, 1000);
-    } catch (err) {
-      return <div>{err.message}</div>;
-    }
+    //sets the input value to empty
+    //this.props.form.setFieldsValue --> handles setting input values in antd
+    this.props.form.setFieldsValue({
+      name: "",
+      rank: "",
+      ability: "",
+      lat: "",
+      lng: ""
+    });
   };
 
   render() {
@@ -38,15 +46,18 @@ class AddPokemons extends Component {
     const { name, rank, ability, lat, lng } = this.state;
     return (
       <div className="form">
+        <Paragraph level={3} className="post-status-message">
+          {this.props.postStatus}
+        </Paragraph>
         <Form
-          onSubmit={e =>
-            this.postPokemonData(e, {
+          onSubmit={e => {
+            this.handleSubmit(e, {
               name,
               rank,
               ability,
               geometry: { coordinates: [lng, lat] }
-            })
-          }
+            });
+          }}
         >
           <Form.Item>
             {getFieldDecorator("name", {
@@ -73,7 +84,7 @@ class AddPokemons extends Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator("ability", {
-              rules: [{ required: true, message: "Please enter a rank" }]
+              rules: [{ required: true, message: "Please enter an ability" }]
             })(
               <Input.TextArea
                 name="ability"
@@ -124,6 +135,7 @@ class AddPokemons extends Component {
               type="primary"
               htmlType="submit"
               className="add-form-button"
+              disabled={!name || !rank || !ability || !lat || !lng}
             >
               Submit
             </Button>
@@ -134,6 +146,22 @@ class AddPokemons extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ postPokemonData }, dispatch);
+};
+
+const mapStateToProps = ({ postStatus }) => {
+  return { postStatus };
+};
+
+AddPokemons.propTypes = {
+  postPokemonData: PropTypes.func.isRequired,
+  postStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired
+};
+
 const WrappedPokemonForm = Form.create({ name: "add_pokemons" })(AddPokemons);
 
-export default WrappedPokemonForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappedPokemonForm);
