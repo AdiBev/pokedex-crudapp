@@ -1,11 +1,20 @@
-import { POST_FAILURE, POST_SUCCESS } from "../actions";
+import {
+  POST_REQ_FAILURE,
+  POST_REQ_SUCCESS,
+  RESET_REQUEST_STATUS
+} from "../actions";
 
 export default (state = "", action) => {
   switch (action.type) {
-    case POST_SUCCESS:
+    case RESET_REQUEST_STATUS:
       return action.payload;
-    case POST_FAILURE:
+
+    case POST_REQ_SUCCESS:
       return action.payload;
+
+    case POST_REQ_FAILURE:
+      return action.payload;
+
     default:
       return state;
   }
