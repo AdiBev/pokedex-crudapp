@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { compose } from "recompose";
 
 //importing action creator here
 import { postPokemonData } from "../actions/index";
@@ -46,7 +46,7 @@ class AddPokemons extends Component {
     const { name, rank, ability, lat, lng } = this.state;
     return (
       <div className="form">
-        <Paragraph level={3} className="post-status-message">
+        <Paragraph level={3} className="req-status-message">
           {this.props.postStatus}
         </Paragraph>
         <Form
@@ -135,7 +135,6 @@ class AddPokemons extends Component {
               type="primary"
               htmlType="submit"
               className="add-form-button"
-              disabled={!name || !rank || !ability || !lat || !lng}
             >
               Submit
             </Button>
@@ -147,7 +146,9 @@ class AddPokemons extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ postPokemonData }, dispatch);
+  return {
+    postPokemonData: data => dispatch(postPokemonData(data))
+  };
 };
 
 const mapStateToProps = ({ postStatus }) => {
@@ -159,9 +160,10 @@ AddPokemons.propTypes = {
   postStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired
 };
 
-const WrappedPokemonForm = Form.create({ name: "add_pokemons" })(AddPokemons);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WrappedPokemonForm);
+export default compose(
+  Form.create({ name: "add_pokemons" }),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(AddPokemons);
