@@ -1,0 +1,26 @@
+/*ant header styles*/
+.ant-layout-header {
+  height: auto;
+  background-color: #ffffff;
+}
+
+/*ant navbar styles*/
+.ant-menu-horizontal {
+  text-align: center;
+}
+
+.ant-menu-item {
+  margin-right: 30px;
+}
+
+
+
+//Ant form customised
+.ant-form-custom {
+  width: 50%;
+  @media (min-width) {
+    .ant-form {
+      width: 70%;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+.find-form-container {
+  overflow-x: hidden;
+  margin-left: 50px;
+  .row-location {
+    margin-top: 20px;
+
+    .compass-icon {
+      font-size: 30px;
+      color: $primary-color;
+    }
+  }
+
+  .row-form {
+    margin-top: 20px;
+
+    .ant-input {
+      width: 60%;
+    }
+  }
+
+  @media (max-width: $phone-width) {
+    & .row-location h4 {
+      font-size: 15px;
+    }
+
+    & .row-form {
+      h4 {
+        font-size: 15px;
+      }
+      .ant-input {
+        width: 100%;
+      }
+
+      .card-container {
+        width: 80%;
+      }
+    }
+  }
+}
