@@ -173,7 +173,7 @@ class FindPokemons extends Component {
           </Form>
         </Row>
 
-        <Row justify="start" gutter={16} className="card-container">
+        <Row justify="start" className="card-container">
           {this.props.nearbyPokemons ? (
             <Title level={4}>Near by Pokemons</Title>
           ) : null}

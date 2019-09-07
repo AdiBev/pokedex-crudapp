@@ -10,6 +10,8 @@ export const GET_POKEMON_DATA = "GET_POKEMON_DATA";
 export const GET_NEARBY_POKEMONS = "GET_NEARBY_POKEMONS";
 export const DELETE_POKEMON = "DELETE_POKEMON";
 
+const url = "https://pokemon-api-server.herokuapp.com/api";
+
 //action creator for post req success
 const postReqSuccess = () => {
   return {
@@ -82,10 +84,8 @@ const getNearbyPokemons = res => {
 
 //This function performs get request to fetch data by page
 export const fetchPokemons = pageNo => {
-  const url = `http://localhost:5000/api/pokemons/page=${pageNo}`;
-
   return async dispatch => {
-    let res = await axios.get(url);
+    let res = await axios.get(`${url}/pokemons/page=${pageNo}`);
     await dispatch(getPokemonData(res.data.pokemons));
     await dispatch(getPokemons(res.data));
   };
@@ -93,10 +93,9 @@ export const fetchPokemons = pageNo => {
 
 //This function fetches pokemon by id
 export const fetchPokemonById = id => {
-  const url = `http://localhost:5000/api/pokemon/${id}`;
   return async dispatch => {
     try {
-      let res = await axios.get(url);
+      let res = await axios.get(`${url}/pokemon/${id}`);
       dispatch(getPokemons(res.data));
     } catch (err) {
       console.log(err.message);
@@ -106,11 +105,9 @@ export const fetchPokemonById = id => {
 
 //This function finds nearest pokemon
 export const findNearbyPokemons = (lng, lat) => {
-  const url = "http://localhost:5000/api/nearbypokemons";
-
   return async dispatch => {
     try {
-      const res = await axios.get(url, {
+      const res = await axios.get(`${url}/nearbypokemons`, {
         params: {
           lng,
           lat
@@ -125,10 +122,9 @@ export const findNearbyPokemons = (lng, lat) => {
 
 //This function performs post request
 export const postPokemonData = data => {
-  const url = "http://localhost:5000/api/pokemon";
   return async dispatch => {
     try {
-      await axios.post(url, data);
+      await axios.post(`${url}/pokemon`, data);
       dispatch(postReqSuccess());
     } catch (err) {
       dispatch(postReqFailure(err.message));
@@ -138,12 +134,12 @@ export const postPokemonData = data => {
 
 //This function updates pokemon data
 export const updatePokemons = (id, data) => {
-  const url = `http://localhost:5000/api/pokemon/${id}`;
+  const url = `http://localhost:5000/api`;
 
   return async dispatch => {
     try {
       dispatch(putReqSuccess());
-      await axios.put(url, data);
+      await axios.put(`${url}/pokemon/${id}`, data);
     } catch (err) {
       dispatch(putReqFailure(err.message));
     }
@@ -152,11 +148,10 @@ export const updatePokemons = (id, data) => {
 
 //This function deletes the pokemon data
 export const deletePokemonById = id => {
-  const url = `http://localhost:5000/api/pokemon/${id}`;
   return async dispatch => {
     try {
       dispatch(deletePokemon(id));
-      await axios.delete(url);
+      await axios.delete(`${url}/pokemon/${id}`);
     } catch (err) {
       console.log(err.message);
     }

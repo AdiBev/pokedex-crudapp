@@ -24,7 +24,7 @@ class EditPokemons extends Component {
 
   fetchPokemonById = async () => {
     const pokemonId = this.props.match.params.id;
-    const url = `http://localhost:5000/api/pokemon/${pokemonId}`;
+    const url = `https://pokemon-api-server.herokuapp.com/api/pokemon/${pokemonId}`;
 
     try {
       let res = await axios.get(url);
