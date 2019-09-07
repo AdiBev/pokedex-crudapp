@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 
 //importing action creator here
-import { postPokemonData } from "../actions/index";
+import { postPokemonData, resetReqStatus } from "../actions/index";
 
 const { Paragraph } = Typography;
 
@@ -16,6 +16,10 @@ class AddPokemons extends Component {
     ability: "",
     lat: "",
     lng: ""
+  };
+
+  componentDidMount = async () => {
+    this.props.resetReqStatus();
   };
 
   handleChange = e => {
@@ -67,6 +71,7 @@ class AddPokemons extends Component {
                 name="name"
                 onChange={this.handleChange}
                 placeholder="Pokemon Name"
+                required
               />
             )}
           </Form.Item>
@@ -79,6 +84,7 @@ class AddPokemons extends Component {
                 onChange={this.handleChange}
                 placeholder="Pokemon Rank"
                 type="number"
+                required
               />
             )}
           </Form.Item>
@@ -89,7 +95,8 @@ class AddPokemons extends Component {
               <Input.TextArea
                 name="ability"
                 onChange={this.handleChange}
-                placeholder="Pokemon Ability"
+                placeholder="Pokemon's Ability"
+                required
               />
             )}
           </Form.Item>
@@ -100,7 +107,7 @@ class AddPokemons extends Component {
                   rules: [
                     {
                       required: true,
-                      message: "Please enter a Langitude value"
+                      message: "Please enter a Longitude value"
                     }
                   ]
                 })(
@@ -109,6 +116,7 @@ class AddPokemons extends Component {
                     onChange={this.handleChange}
                     placeholder="Longitude ex: 34"
                     type="number"
+                    required
                   />
                 )}
               </Form.Item>
@@ -125,6 +133,7 @@ class AddPokemons extends Component {
                     onChange={this.handleChange}
                     placeholder="Latitude ex: 80"
                     type="number"
+                    required
                   />
                 )}
               </Form.Item>
@@ -147,7 +156,8 @@ class AddPokemons extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    postPokemonData: data => dispatch(postPokemonData(data))
+    postPokemonData: data => dispatch(postPokemonData(data)),
+    resetReqStatus: () => dispatch(resetReqStatus())
   };
 };
 
@@ -157,6 +167,7 @@ const mapStateToProps = ({ postStatus }) => {
 
 AddPokemons.propTypes = {
   postPokemonData: PropTypes.func.isRequired,
+  resetReqStatus: PropTypes.func.isRequired,
   postStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired
 };
 

@@ -50,8 +50,8 @@ class EditPokemons extends Component {
       name: pokemonData.name,
       rank: pokemonData.rank,
       ability: pokemonData.ability,
-      lat: coordinates ? coordinates[0] : "",
-      lng: coordinates ? coordinates[1] : ""
+      lat: coordinates[0],
+      lng: coordinates[1]
     });
   };
 
@@ -127,7 +127,7 @@ class EditPokemons extends Component {
               <Input.TextArea
                 name="ability"
                 onChange={this.handleChange}
-                placeholder="Pokemon Ability"
+                placeholder="Pokemon's Ability"
               />
             )}
           </Form.Item>
@@ -138,14 +138,14 @@ class EditPokemons extends Component {
                   rules: [
                     {
                       required: true,
-                      message: "Please enter a Langitude value"
+                      message: "Please enter a Longitude value"
                     }
                   ]
                 })(
                   <Input
                     name="lng"
                     onChange={this.handleChange}
-                    placeholder="Longitude ex: 34"
+                    placeholder="Longitude value"
                     type="number"
                   />
                 )}
@@ -161,7 +161,7 @@ class EditPokemons extends Component {
                   <Input
                     name="lat"
                     onChange={this.handleChange}
-                    placeholder="Latitude ex: 80"
+                    placeholder="Latitude value"
                     type="number"
                   />
                 )}
