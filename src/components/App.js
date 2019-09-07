@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import { Typography, Layout } from "antd";
 
@@ -6,13 +6,14 @@ import NavBar from "./Nav";
 import GetPokemons from "./ViewPokemons";
 import AddPokemons from "./AddPokemons";
 import EditPokemons from "./EditPokemons";
+import FindPokemons from "./FindPokemons";
 
 const { Title } = Typography;
 const { Header, Content } = Layout;
 
 function App() {
   return (
-    <div>
+    <Fragment>
       <Header>
         <Title className="heading">
           <Link to="/">Pokédex</Link>
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/" component={GetPokemons} />
           <Route path="/addpokemons" component={AddPokemons} />
           <Route path="/edit/:id" component={EditPokemons} />
+          <Route path="/nearbyPokemons" component={FindPokemons} />
           <Route
             component={() => (
               <Title level="h2" className="page-error">
@@ -33,7 +35,7 @@ function App() {
           />
         </Switch>
       </Content>
-    </div>
+    </Fragment>
   );
 }
 
