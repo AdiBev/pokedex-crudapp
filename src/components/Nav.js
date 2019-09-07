@@ -25,7 +25,7 @@ class NavBar extends Component {
           </Link>
         </Menu.Item>
         <Menu.Item key="Search">
-          <Link to="/">
+          <Link to="/nearbypokemons">
             <Icon type="search" />
             Find a Pokemon
           </Link>
