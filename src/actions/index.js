@@ -5,9 +5,9 @@ export const POST_REQ_SUCCESS = "POST_REQ_SUCCESS";
 export const PUT_REQ_SUCCESS = "PUT_REQ_SUCCESS";
 export const PUT_REQ_FAILURE = "PUT_REQ_FAILURE";
 export const RESET_REQUEST_STATUS = "RESET_REQUEST_STATUS";
-export const GET_DATA = "GET_DATA";
+export const GET_PAGINATION_DATA = "GET_PAGINATION_DATA";
 export const GET_POKEMON_DATA = "GET_POKEMON_DATA";
-
+export const GET_NEARBY_POKEMONS = "GET_NEARBY_POKEMONS";
 export const DELETE_POKEMON = "DELETE_POKEMON";
 
 //action creator for post req success
@@ -61,7 +61,7 @@ export const resetReqStatus = () => {
 //action creator for success in get request
 const getPokemons = res => {
   return {
-    type: GET_DATA,
+    type: GET_PAGINATION_DATA,
     payload: res
   };
 };
@@ -73,14 +73,21 @@ const getPokemonData = res => {
   };
 };
 
-//This function performs get request
+const getNearbyPokemons = res => {
+  return {
+    type: GET_NEARBY_POKEMONS,
+    payload: res
+  };
+};
+
+//This function performs get request to fetch data by page
 export const fetchPokemons = pageNo => {
   const url = `http://localhost:5000/api/pokemons/page=${pageNo}`;
 
   return async dispatch => {
     let res = await axios.get(url);
-    dispatch(getPokemonData(res.data.pokemons));
-    dispatch(getPokemons(res.data));
+    await dispatch(getPokemonData(res.data.pokemons));
+    await dispatch(getPokemons(res.data));
   };
 };
 
@@ -91,6 +98,25 @@ export const fetchPokemonById = id => {
     try {
       let res = await axios.get(url);
       dispatch(getPokemons(res.data));
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+};
+
+//This function finds nearest pokemon
+export const findNearbyPokemons = (lng, lat) => {
+  const url = "http://localhost:5000/api/nearbypokemons";
+
+  return async dispatch => {
+    try {
+      const res = await axios.get(url, {
+        params: {
+          lng,
+          lat
+        }
+      });
+      dispatch(getNearbyPokemons(res.data));
     } catch (err) {
       console.log(err.message);
     }
