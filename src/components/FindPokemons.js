@@ -138,7 +138,7 @@ class FindPokemons extends Component {
                 <Input
                   name="lng"
                   onChange={this.handleChange}
-                  placeholder="Your location's Langitude value"
+                  placeholder="Your location's Longitude value"
                   type="number"
                   className="find-form-input"
                   required
